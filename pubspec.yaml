@@ -1,0 +1,39 @@
+name: check_astra
+description: A new Flutter application.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  bloc: ^3.0.0
+  flutter_bloc: ^3.2.0
+  equatable: ^1.1.0
+  get_it: ^3.1.0
+  shared_preferences: ^0.5.6+1
+  cupertino_icons:
+  url_launcher: ^5.4.1
+  flutter_launcher_icons: ^0.7.4
+  local_auth: ^0.6.1
+  percent_indicator: 2.1.1
+  http: ^0.12.0+4
+  barcode_scan: ^2.0.1
+  flutter_speed_dial: ^1.2.5
+  radial_button: ^1.0.0
+  google_maps_flutter: ^0.5.24+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.jpg"
+
+flutter:
+
+  uses-material-design: true
+
