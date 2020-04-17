@@ -14,7 +14,7 @@ class SimpleLogin extends LoginLogic{
   @override
   Future<String> login(String email, String password) async {
     await Future.delayed(Duration(seconds: 2));
-    if(email !="torrot" || password != "123"){
+    if(email !="ecooter" || password != "123"){
       throw LoginException();
     }
     User user = User(userName: email,password: password,token: "Tokem random");

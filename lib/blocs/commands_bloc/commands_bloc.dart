@@ -31,13 +31,17 @@ class CommandsBloc extends Bloc<CommandsEvent, CommandsState> {
         yield ErrorCommandsState("Fallo al enviar el comando");
       }
     }
-    if( event is findScootEvent){
+    if( event is FindScootEvent){
       try{
         var response = await logic.find(event.imei);
         yield ScootedCommandState(response);
       }on CommandsException{
         yield ErrorCommandsState("Fallo al enviar el comando");
       }
+    }
+    if( event is GenericInfoEvent){
+      var response = await logic.genericInfo(event.imei);
+      yield GenericInfoCommandsState(response);
     }
   }
 }

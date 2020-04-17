@@ -17,9 +17,17 @@ class ScanEvent extends CommandsEvent{
   List<Object> get props => [];
 }
 
-class findScootEvent extends CommandsEvent{
+class FindScootEvent extends CommandsEvent{
   final String imei;
-  findScootEvent(this.imei);
+  FindScootEvent(this.imei);
+  @override
+  List<Object> get props => [imei];
+
+}
+
+class GenericInfoEvent extends CommandsEvent{
+  final String imei;
+  GenericInfoEvent(this.imei);
   @override
   List<Object> get props => [imei];
 

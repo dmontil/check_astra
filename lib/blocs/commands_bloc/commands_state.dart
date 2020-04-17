@@ -1,3 +1,4 @@
+import 'package:check_astra/models/genericScooterCanbus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -36,6 +37,15 @@ class ScootedCommandState extends CommandsState{
   List<Object> get props => [position];
 
 }
+
+class GenericInfoCommandsState extends CommandsState{
+  final GenericScooterCanbus data;
+  GenericInfoCommandsState(this.data);
+  @override
+  List<Object> get props => [this.data];
+
+}
+
 
 class ErrorCommandsState extends CommandsState{
   final String message;

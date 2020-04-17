@@ -16,16 +16,24 @@ class _CommandsPageState extends State<CommandsPage> {
   TextEditingController _commandController;
   bool _isOn;
   String _imei;
+  bool _isPower;
   String _responseAstra;
   String _lastConnection;
+  int _batteryOne;
+  int _batteryTwo;
   @override
   void initState() {
     super.initState();
     _commandsBloc = CommandsBloc(logic: AstraProvider());
     _isOn = false;
     _imei = "";
+    _isPower = false;
     _responseAstra = "";
     _lastConnection = "";
+    _batteryOne = 0;
+    _batteryTwo = 0;
+
+
   }
 
   @override
@@ -38,15 +46,23 @@ class _CommandsPageState extends State<CommandsPage> {
           if (state is ErrorCommandsState) {}
           if (state is PostedCommandsState) {
             _responseAstra = state.response;
+            if(_isPower){
+              _isOn = ! _isOn;
+            }
           }
           if (state is PostinCommandsState) {}
           if (state is ScanedCommandsState) {
             _imei = state.barcode;
           }
+
           if(  state is ScootedCommandState){
             Navigator.of(context).push(MaterialPageRoute(builder: (_){
               return MapPage(position: state.position);
             }));
+          }
+          if( state is GenericInfoCommandsState){
+            _batteryOne = state.data.battery1Soc;
+            _batteryTwo = state.data.battery2Soc;
           }
 
         },
@@ -56,7 +72,7 @@ class _CommandsPageState extends State<CommandsPage> {
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
             appBar: AppBar(
-              title: Text("TORROT"),
+              title: Text("ECOOTER"),
               actions: <Widget>[
                 FlatButton(
                   child: Icon(
@@ -75,7 +91,7 @@ class _CommandsPageState extends State<CommandsPage> {
                     rowImei(),
                     imageScooter(),
                     rowLastConnect(),
-                    rowIndicators(60, 30, 90),
+                    rowIndicators(_batteryOne, _batteryTwo, 90),
                     rowInfoCommand(),
                   ],
                 ),
@@ -99,14 +115,24 @@ class _CommandsPageState extends State<CommandsPage> {
 
   _powerOn() {
     _commandsBloc.add(PostCommandsEvent("\$PWON,1", ""));
+    _isPower = true;
+    _isOn = true;
+
+    setState(() {
+    });
+
   }
 
   _powerOff() {
     _commandsBloc.add(PostCommandsEvent("\$PWON,0", ""));
+    _isPower = true;
+    _isOn = false;
+    setState(() {
+    });
   }
 
   _find() {
-    _commandsBloc.add(findScootEvent(_imei));
+    _commandsBloc.add(FindScootEvent(_imei));
   }
   _scan() {
     _commandsBloc.add(ScanEvent());
@@ -125,7 +151,7 @@ class _CommandsPageState extends State<CommandsPage> {
   imageScooter() {
     return Container(
       child: Image.network(
-        "https://torrot.com/uploads/images/torrot-business/msg.jpg",
+        "https://s3.medias-norauto.es/images_produits/2206203/900x900/escooter-ecooter-e2-r40-plata--2206203.jpg",
         height: _screenSize.height * 0.3,
       ),
     );
